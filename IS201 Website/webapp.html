@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WACC Calculator</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            background-color: #f4f4f4; 
+            padding: 40px; 
+        }
+        .container { 
+            background: white; 
+            padding: 30px; 
+            border: 1px solid #ccc;
+            max-width: 400px; 
+            margin: 0 auto;
+        }
+        h2 { 
+            margin-top: 0; 
+            color: #333;
+        }
+        .input-group { 
+            margin-bottom: 12px; 
+        }
+        label { 
+            display: block; 
+            margin-bottom: 4px; 
+            font-size: 0.9rem; 
+        }
+        input { 
+            width: 100%; 
+            padding: 8px; 
+            border: 1px solid #aaa; 
+            box-sizing: border-box; 
+        }
+        button { 
+            width: 100%; 
+            padding: 10px; 
+            background-color: #002e5d; 
+            color: white; 
+            border: none; 
+            cursor: pointer; 
+            margin-top: 10px; 
+        }
+        button:hover { 
+            background-color: #001a36; 
+        }
+        #result { 
+            margin-top: 20px; 
+            font-size: 1.2rem; 
+            font-weight: bold; 
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+        .back-link { 
+            display: block;
+            margin-bottom: 20px; 
+            color: #555; 
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="scratch.html" class="back-link">Back to Hub</a>
+    
+    <div class="container">
+        <h2>WACC Calculator</h2>
+        
+        <div class="input-group">
+            <label>Total Equity ($):</label>
+            <input type="number" id="equity">
+        </div>
+        <div class="input-group">
+            <label>Total Debt ($):</label>
+            <input type="number" id="debt">
+        </div>
+        <div class="input-group">
+            <label>Cost of Equity (%):</label>
+            <input type="number" id="costEquity">
+        </div>
+        <div class="input-group">
+            <label>Cost of Debt (%):</label>
+            <input type="number" id="costDebt">
+        </div>
+        <div class="input-group">
+            <label>Corporate Tax Rate (%):</label>
+            <input type="number" id="taxRate">
+        </div>
+        
+        <button onclick="calculateWACC()">Calculate</button>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function calculateWACC() {
+            const E = parseFloat(document.getElementById('equity').value);
+            const D = parseFloat(document.getElementById('debt').value);
+            const Re = parseFloat(document.getElementById('costEquity').value) / 100;
+            const Rd = parseFloat(document.getElementById('costDebt').value) / 100;
+            const T = parseFloat(document.getElementById('taxRate').value) / 100;
+
+            if (isNaN(E) || isNaN(D) || isNaN(Re) || isNaN(Rd) || isNaN(T)) {
+                document.getElementById('result').innerText = "Please enter valid numbers.";
+                return;
+            }
+
+            const V = E + D;
+            const wacc = ((E / V) * Re) + ((D / V) * Rd * (1 - T));
+            
+            document.getElementById('result').innerText = `Result: ${ (wacc * 100).toFixed(2) }%`;
+        }
+    </script>
+</body>
+</html>
